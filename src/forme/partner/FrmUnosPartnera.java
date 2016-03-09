@@ -4,6 +4,10 @@
  */
 package forme.partner;
 
+import domen.Mesto;
+import java.util.List;
+import poslovnalogika.Kontroler;
+
 /**
  *
  * @author Darko
@@ -15,6 +19,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
      */
     public FrmUnosPartnera() {
         initComponents();
+        srediFormu();
     }
 
     /**
@@ -68,6 +73,11 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         jLabel9.setText("Mesto:");
 
         jbtnSacuvaj.setText("Sacuvaj");
+        jbtnSacuvaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSacuvajActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,6 +174,11 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbtnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSacuvajActionPerformed
+        // TODO Prihvatiti podatke, izvrsiti konverziju 
+        // i validaciju i sacuvati poslovnog partnera
+    }//GEN-LAST:event_jbtnSacuvajActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -220,4 +235,12 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtUlica;
     private javax.swing.JTextField jtxtZiroRacun;
     // End of variables declaration//GEN-END:variables
+
+    private void srediFormu() {
+        List<Mesto> listaMesta = Kontroler.getInstance().vratiMesta();
+        jcbMesto.removeAllItems();
+        for (Mesto m : listaMesta) {
+            jcbMesto.addItem(m.toString());
+        }
+    }
 }
