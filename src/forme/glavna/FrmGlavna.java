@@ -4,6 +4,9 @@
  */
 package forme.glavna;
 
+import forme.partner.FrmPrikazPartnera;
+import forme.partner.FrmUnosPartnera;
+
 /**
  *
  * @author Darko
@@ -26,7 +29,35 @@ public class FrmGlavna extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jmbGlavniMeni = new javax.swing.JMenuBar();
+        jmRadSaPartnerima = new javax.swing.JMenu();
+        jmiUnosPartnera = new javax.swing.JMenuItem();
+        jmiPrikazPartnera = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ProSoft");
+
+        jmRadSaPartnerima.setText("Rad sa partnerima");
+
+        jmiUnosPartnera.setText("Unos partnera");
+        jmiUnosPartnera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiUnosPartneraActionPerformed(evt);
+            }
+        });
+        jmRadSaPartnerima.add(jmiUnosPartnera);
+
+        jmiPrikazPartnera.setText("Prikaz partnera");
+        jmiPrikazPartnera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPrikazPartneraActionPerformed(evt);
+            }
+        });
+        jmRadSaPartnerima.add(jmiPrikazPartnera);
+
+        jmbGlavniMeni.add(jmRadSaPartnerima);
+
+        setJMenuBar(jmbGlavniMeni);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -36,11 +67,21 @@ public class FrmGlavna extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 279, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jmiUnosPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUnosPartneraActionPerformed
+        FrmUnosPartnera frmUnosPartnera = new FrmUnosPartnera();
+        frmUnosPartnera.setVisible(true);
+    }//GEN-LAST:event_jmiUnosPartneraActionPerformed
+
+    private void jmiPrikazPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikazPartneraActionPerformed
+        FrmPrikazPartnera frmPrikazPartnera = new FrmPrikazPartnera();
+        frmPrikazPartnera.setVisible(true);
+    }//GEN-LAST:event_jmiPrikazPartneraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +119,9 @@ public class FrmGlavna extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jmRadSaPartnerima;
+    private javax.swing.JMenuBar jmbGlavniMeni;
+    private javax.swing.JMenuItem jmiPrikazPartnera;
+    private javax.swing.JMenuItem jmiUnosPartnera;
     // End of variables declaration//GEN-END:variables
 }
