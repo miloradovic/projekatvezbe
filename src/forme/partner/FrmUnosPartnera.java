@@ -48,7 +48,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jtxtBroj = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jcbMesto = new javax.swing.JComboBox<>();
+        jcbMesto = new javax.swing.JComboBox();
         jbtnSacuvaj = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -71,6 +71,8 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         jLabel8.setText("Broj:");
 
         jLabel9.setText("Mesto:");
+
+        jcbMesto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2" }));
 
         jbtnSacuvaj.setText("Sacuvaj");
         jbtnSacuvaj.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +227,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JButton jbtnSacuvaj;
-    private javax.swing.JComboBox<String> jcbMesto;
+    private javax.swing.JComboBox jcbMesto;
     private javax.swing.JTextField jtxtBroj;
     private javax.swing.JTextField jtxtDatum;
     private javax.swing.JTextField jtxtMaticni;
@@ -240,7 +242,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         List<Mesto> listaMesta = Kontroler.getInstance().vratiMesta();
         jcbMesto.removeAllItems();
         for (Mesto m : listaMesta) {
-            jcbMesto.addItem(m.toString());
+            jcbMesto.addItem(m);
         }
     }
 }
