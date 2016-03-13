@@ -7,6 +7,8 @@ package forme.glavna;
 import domen.Mesto;
 import forme.partner.FrmPrikazPartnera;
 import forme.partner.FrmUnosPartnera;
+import java.awt.BorderLayout;
+import javax.swing.JDialog;
 import poslovnalogika.Kontroler;
 
 /**
@@ -84,7 +86,11 @@ public class FrmGlavna extends javax.swing.JFrame {
 
     private void jmiPrikazPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikazPartneraActionPerformed
         FrmPrikazPartnera frmPrikazPartnera = new FrmPrikazPartnera();
-        frmPrikazPartnera.setVisible(true);
+        JDialog dialog = new JDialog(this, "Prikaz partnera", true);
+        dialog.setLayout(new BorderLayout());
+        dialog.add(frmPrikazPartnera, BorderLayout.CENTER);
+        dialog.pack();
+        dialog.setVisible(true);
     }//GEN-LAST:event_jmiPrikazPartneraActionPerformed
 
     /**

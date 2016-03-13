@@ -5,7 +5,12 @@
 package forme.partner;
 
 import domen.Mesto;
+import domen.PoslovniPartner;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import poslovnalogika.Kontroler;
 
 /**
@@ -177,8 +182,23 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSacuvajActionPerformed
-        // TODO Prihvatiti podatke, izvrsiti konverziju 
-        // i validaciju i sacuvati poslovnog partnera
+        try {
+            int partnerID = Integer.parseInt(jtxtPartnerID.getText().trim());
+            String naziv = jtxtNaziv.getText().trim();
+            int pib = Integer.parseInt(jtxtPib.getText().trim());
+            int maticni = Integer.parseInt(jtxtMaticni.getText().trim());
+            DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+            Date datum = df.parse(jtxtDatum.getText().trim());
+            String ziroRacun = jtxtZiroRacun.getText().trim();
+            String ulica = jtxtUlica.getText().trim();
+            String broj = jtxtBroj.getText().trim();
+            Mesto mesto = (Mesto) jcbMesto.getSelectedItem();
+            PoslovniPartner pp = new PoslovniPartner(partnerID, naziv, pib, maticni, datum, ziroRacun, ulica, broj, mesto);
+            
+            Kontroler.getInstance().dodajPartnera(pp);
+            JOptionPane.showMessageDialog(this, "Partner je sacuvan.");
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jbtnSacuvajActionPerformed
 
     /**
