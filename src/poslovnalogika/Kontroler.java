@@ -6,7 +6,7 @@ package poslovnalogika;
 
 import domen.Mesto;
 import domen.PoslovniPartner;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -17,10 +17,12 @@ public class Kontroler {
     private KolekcijaMesta kolekcijaMesta;
     private KolekcijaPartnera kolekcijaPartnera;
     private static Kontroler instance;
+    private Map<String, Object> map;
 
     private Kontroler() {
         kolekcijaMesta = new KolekcijaMesta();
         kolekcijaPartnera = new KolekcijaPartnera();
+        map = new HashMap<>();
     }
 
     public static Kontroler getInstance() {
@@ -44,5 +46,17 @@ public class Kontroler {
 
     public List<Mesto> vratiMesta() {
         return kolekcijaMesta.vratiMesta();
+    }
+    
+    public void put(String key, Object value) {
+        map.put(key, value);
+    }
+    
+    public Object get(String key) {
+        return map.get(key);
+    }
+    
+    public void remove(String key){
+        map.remove(key);
     }
 }
