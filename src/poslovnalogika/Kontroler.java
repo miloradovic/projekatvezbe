@@ -4,6 +4,7 @@
  */
 package poslovnalogika;
 
+import db.DbKomunikacija;
 import domen.Mesto;
 import domen.PoslovniPartner;
 import java.util.*;
@@ -16,12 +17,14 @@ public class Kontroler {
 
     private KolekcijaMesta kolekcijaMesta;
     private KolekcijaPartnera kolekcijaPartnera;
+    private DbKomunikacija db;
     private static Kontroler instance;
     private Map<String, Object> map;
 
     private Kontroler() {
         kolekcijaMesta = new KolekcijaMesta();
         kolekcijaPartnera = new KolekcijaPartnera();
+        db = new DbKomunikacija();
         map = new HashMap<>();
     }
 
@@ -32,8 +35,12 @@ public class Kontroler {
         return instance;
     }
 
-    public void dodajPartnera(PoslovniPartner pp) {
-        kolekcijaPartnera.dodajPartnera(pp);
+    public void dodajPartnera(PoslovniPartner pp) throws Exception {
+        //kolekcijaPartnera.dodajPartnera(pp);
+        db.ucitajDriver();
+        db.otvoriKonekciju();
+        db.sacuvajPartnera(pp);
+        db.zatvoriKonekciju();
     }
 
     public List<PoslovniPartner> vratiPartnere() {
@@ -44,8 +51,14 @@ public class Kontroler {
         kolekcijaMesta.dodajMesto(m);
     }
 
-    public List<Mesto> vratiMesta() {
-        return kolekcijaMesta.vratiMesta();
+    public List<Mesto> vratiMesta() throws Exception {
+        //return kolekcijaMesta.vratiMesta();
+        db.ucitajDriver();
+        db.otvoriKonekciju();
+        List<Mesto> lm = db.vratiMesta();
+        db.zatvoriKonekciju();
+        
+        return lm;
     }
     
     public void put(String key, Object value) {
