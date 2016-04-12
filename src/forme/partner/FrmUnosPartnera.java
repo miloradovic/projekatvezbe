@@ -6,12 +6,15 @@ package forme.partner;
 
 import domen.Mesto;
 import domen.PoslovniPartner;
+import forme.partner.model.PartnerTableModel;
 import java.awt.HeadlessException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import poslovnalogika.Kontroler;
 
@@ -22,6 +25,7 @@ import poslovnalogika.Kontroler;
 public class FrmUnosPartnera extends javax.swing.JFrame {
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+
     /**
      * Creates new form FrmUnosPartnera
      */
@@ -59,6 +63,11 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         jcbMesto = new javax.swing.JComboBox();
         jbtnSacuvaj = new javax.swing.JButton();
         jbtnIzmeni = new javax.swing.JButton();
+        jbtnDodajRed = new javax.swing.JButton();
+        jbtnIzbrisiRed = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtblPartner = new javax.swing.JTable();
+        jbtnSacuvajListuPartnera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Unos partnera");
@@ -97,6 +106,40 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
             }
         });
 
+        jbtnDodajRed.setText("Dodaj red");
+        jbtnDodajRed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDodajRedActionPerformed(evt);
+            }
+        });
+
+        jbtnIzbrisiRed.setText("Obrisi red");
+        jbtnIzbrisiRed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnIzbrisiRedActionPerformed(evt);
+            }
+        });
+
+        jtblPartner.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jtblPartner);
+
+        jbtnSacuvajListuPartnera.setText("Sacuvaj listu partnera ");
+        jbtnSacuvajListuPartnera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnSacuvajListuPartneraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,6 +147,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -141,9 +185,16 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
                             .addComponent(jcbMesto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jtxtBroj, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtnSacuvaj, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbtnIzmeni, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jbtnDodajRed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbtnSacuvaj, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jbtnIzmeni, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(jbtnIzbrisiRed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jbtnSacuvajListuPartnera, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -186,10 +237,18 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jcbMesto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnSacuvaj)
                     .addComponent(jbtnIzmeni))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnDodajRed)
+                    .addComponent(jbtnIzbrisiRed))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jbtnSacuvajListuPartnera)
                 .addContainerGap())
         );
 
@@ -209,17 +268,47 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
             String broj = jtxtBroj.getText().trim();
             Mesto mesto = (Mesto) jcbMesto.getSelectedItem();
             PoslovniPartner pp = new PoslovniPartner(partnerID, naziv, pib, maticni, datum, ziroRacun, ulica, broj, mesto);
-            
+
             Kontroler.getInstance().dodajPartnera(pp);
             JOptionPane.showMessageDialog(this, "Partner je sacuvan.");
         } catch (NumberFormatException | ParseException | HeadlessException e) {
             System.out.println("Greska: " + e.toString());
+        } catch (Exception ex) {
+            Logger.getLogger(FrmUnosPartnera.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbtnSacuvajActionPerformed
 
     private void jbtnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIzmeniActionPerformed
-        // TODO add your handling code here:
+        //Todo
     }//GEN-LAST:event_jbtnIzmeniActionPerformed
+
+    private void jbtnDodajRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDodajRedActionPerformed
+        PartnerTableModel model = (PartnerTableModel) jtblPartner.getModel();
+        model.dodajRed();
+    }//GEN-LAST:event_jbtnDodajRedActionPerformed
+
+    private void jbtnSacuvajListuPartneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSacuvajListuPartneraActionPerformed
+        try {
+            PartnerTableModel model = (PartnerTableModel) jtblPartner.getModel();
+            List<PoslovniPartner> lp = model.vratiPartnere();
+            Kontroler.getInstance().sacuvajPartnere(lp);
+            JOptionPane.showMessageDialog(this, "Partneri su sacuvani.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Partneri nisu sacuvani.");
+        }
+    }//GEN-LAST:event_jbtnSacuvajListuPartneraActionPerformed
+
+    private void jbtnIzbrisiRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIzbrisiRedActionPerformed
+        int red = jtblPartner.getSelectedRow();
+
+        if (red == -1) {
+            JOptionPane.showMessageDialog(this, "Morate odabrati red.");
+        } else {
+            PartnerTableModel model = (PartnerTableModel) jtblPartner.getModel();
+            model.obrisiRed(red);
+        }
+    }//GEN-LAST:event_jbtnIzbrisiRedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,9 +355,14 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtnDodajRed;
+    private javax.swing.JButton jbtnIzbrisiRed;
     private javax.swing.JButton jbtnIzmeni;
     private javax.swing.JButton jbtnSacuvaj;
+    private javax.swing.JButton jbtnSacuvajListuPartnera;
     private javax.swing.JComboBox jcbMesto;
+    private javax.swing.JTable jtblPartner;
     private javax.swing.JTextField jtxtBroj;
     private javax.swing.JTextField jtxtDatum;
     private javax.swing.JTextField jtxtMaticni;
@@ -280,30 +374,34 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void srediFormu() {
-        List<Mesto> listaMesta = Kontroler.getInstance().vratiMesta();
-        jcbMesto.removeAllItems();
-        for (Mesto m : listaMesta) {
-            jcbMesto.addItem(m);
-        }
-        
-        PoslovniPartner pp = (PoslovniPartner) Kontroler.getInstance().get("izabrani_partner");
-        if (pp != null) {
-            // Operacija je izmena
-            jbtnSacuvaj.setVisible(false);
-            jtxtPartnerID.setText(String.valueOf(pp.getPartnerID()));
-            jtxtNaziv.setText(pp.getNaziv());
-            jtxtPib.setText(String.valueOf(pp.getPib()));
-            jtxtMaticni.setText(String.valueOf(pp.getMaticniBroj()));
-            //jtxtDatum.setText(pp.getDatumOsnivanja().toString());
-            jtxtDatum.setText(DATE_FORMAT.format(pp.getDatumOsnivanja()));
-            jtxtZiroRacun.setText(pp.getZiroRacun());
-            jtxtUlica.setText(pp.getUlica());
-            jtxtBroj.setText(pp.getBroj());
-            jcbMesto.setSelectedItem(pp.getMesto());
-            Kontroler.getInstance().remove("izabrani_partner");
-        } else {
-            // Operacija je unos
-            jbtnIzmeni.setVisible(false);
+        try {
+            List<Mesto> listaMesta = Kontroler.getInstance().vratiMesta();
+            jcbMesto.removeAllItems();
+            for (Mesto m : listaMesta) {
+                jcbMesto.addItem(m);
+            }
+
+            PoslovniPartner pp = (PoslovniPartner) Kontroler.getInstance().get("izabrani_partner");
+            if (pp != null) {
+                // Operacija je izmena
+                jbtnSacuvaj.setVisible(false);
+                jtxtPartnerID.setText(String.valueOf(pp.getPartnerID()));
+                jtxtNaziv.setText(pp.getNaziv());
+                jtxtPib.setText(String.valueOf(pp.getPib()));
+                jtxtMaticni.setText(String.valueOf(pp.getMaticniBroj()));
+                //jtxtDatum.setText(pp.getDatumOsnivanja().toString());
+                jtxtDatum.setText(DATE_FORMAT.format(pp.getDatumOsnivanja()));
+                jtxtZiroRacun.setText(pp.getZiroRacun());
+                jtxtUlica.setText(pp.getUlica());
+                jtxtBroj.setText(pp.getBroj());
+                jcbMesto.setSelectedItem(pp.getMesto());
+                Kontroler.getInstance().remove("izabrani_partner");
+            } else {
+                // Operacija je unos
+                jbtnIzmeni.setVisible(false);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 }

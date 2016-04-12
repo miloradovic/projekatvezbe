@@ -31,8 +31,25 @@ public class DbKomunikacija {
                     "jdbc:mysql://localhost/poslovnipartneri", 
                     "root", 
                     "root");
+            connection.setAutoCommit(false); // Zahteva eksplicitnu potvrdu transakcije
         } catch (SQLException ex) {
             throw new Exception("Neuspesno otvaranje konekcije!", ex);
+        }
+    }
+    
+    public void commitTransakcije() throws Exception {
+        try {
+            connection.commit();
+        } catch (SQLException ex) {
+            throw new Exception("Neuspesan commit transakcije.", ex);
+        }
+    }
+    
+    public void rollbackTransakcije() throws Exception {
+        try {
+            connection.rollback();
+        } catch (SQLException ex) {
+            throw new Exception("Neuspesan rollback transakcije.", ex);
         }
     }
     
@@ -85,4 +102,8 @@ public class DbKomunikacija {
         }
     }
     
+    public List<PoslovniPartner> vratiPartnere() throws Exception {
+        String sql = "SELECT * FROM PoslovniPartner p INNER JOIN Mesto m ON (p.ptt = m.ptt)";
+        throw new Exception("Uraditi za domaci");
+    }
 }

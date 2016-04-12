@@ -119,4 +119,20 @@ public class PartnerTableModel extends AbstractTableModel {
         return listaPartnera.get(red);
     }
 
+    public void dodajRed() {
+        listaPartnera.add(new PoslovniPartner());
+        System.out.println("Dodat je novi partner.");
+        fireTableDataChanged();
+    }
+    
+    public void obrisiRed(int red) {
+        listaPartnera.remove(red);
+        System.out.println("Obrisan je red.");
+        fireTableDataChanged();
+    }
+    
+    public List<PoslovniPartner> vratiPartnere() {
+        return listaPartnera;
+    }
+    
 }

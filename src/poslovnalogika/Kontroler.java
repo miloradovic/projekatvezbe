@@ -40,6 +40,7 @@ public class Kontroler {
         db.ucitajDriver();
         db.otvoriKonekciju();
         db.sacuvajPartnera(pp);
+        db.commitTransakcije();
         db.zatvoriKonekciju();
     }
 
@@ -56,20 +57,37 @@ public class Kontroler {
         db.ucitajDriver();
         db.otvoriKonekciju();
         List<Mesto> lm = db.vratiMesta();
+        db.commitTransakcije();
         db.zatvoriKonekciju();
-        
+
         return lm;
     }
-    
+
     public void put(String key, Object value) {
         map.put(key, value);
     }
-    
+
     public Object get(String key) {
         return map.get(key);
     }
-    
-    public void remove(String key){
+
+    public void remove(String key) {
         map.remove(key);
+    }
+
+    public void sacuvajPartnere(List<PoslovniPartner> lp) throws Exception {
+        try {
+            db.ucitajDriver();
+            db.otvoriKonekciju();
+            for (PoslovniPartner p : lp) {
+                db.sacuvajPartnera(p);
+                System.out.println("Sacuvao parnterID = " + p.getPartnerID());
+            }
+            db.commitTransakcije();
+        } catch (Exception ex) {
+            db.rollbackTransakcije();
+        } finally {
+            db.zatvoriKonekciju();
+        }
     }
 }
