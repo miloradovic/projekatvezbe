@@ -7,6 +7,8 @@ package poslovnalogika;
 import db.DbKomunikacija;
 import domen.Mesto;
 import domen.PoslovniPartner;
+import domen.Proizvod;
+import domen.Racun;
 import java.util.*;
 
 /**
@@ -86,6 +88,30 @@ public class Kontroler {
             db.commitTransakcije();
         } catch (Exception ex) {
             db.rollbackTransakcije();
+        } finally {
+            db.zatvoriKonekciju();
+        }
+    }
+    
+    public List<Proizvod> vratiProizvode() throws Exception {
+        db.ucitajDriver();
+        db.otvoriKonekciju();
+        List<Proizvod> lp = db.vratiProizvode();
+        db.commitTransakcije();
+        db.zatvoriKonekciju();
+        return lp;
+    }
+    
+    public void sacuvajRacun(Racun racun) throws Exception {
+        try {
+            racun.pripremiRacun();
+            db.ucitajDriver();
+            db.otvoriKonekciju();
+            db.sacuvajRacun(racun);
+            db.commitTransakcije();
+        } catch (Exception ex) {
+            db.rollbackTransakcije();
+            throw ex;
         } finally {
             db.zatvoriKonekciju();
         }
