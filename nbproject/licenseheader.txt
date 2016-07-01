@@ -1,8 +1,0 @@
-<#if licenseFirst??>
-${licenseFirst}
-</#if>
-${licensePrefix}Student: Darko Miloradovic
-${licensePrefix}Projektovanje softvera, FON, 2016
-<#if licenseLast??>
-${licenseLast}
-</#if>
