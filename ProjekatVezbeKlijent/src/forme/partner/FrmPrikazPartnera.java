@@ -8,7 +8,6 @@ import domen.PoslovniPartner;
 import forme.partner.model.PartnerTableModel;
 import java.util.List;
 import javax.swing.*;
-import poslovnalogika.Kontroler;
 
 /**
  *
@@ -99,7 +98,7 @@ public class FrmPrikazPartnera extends javax.swing.JPanel {
         } else {
             PartnerTableModel model = (PartnerTableModel) jtblPartner.getModel();
             PoslovniPartner pp = model.getPartner(red);
-            Kontroler.getInstance().put("izabrani_partner", pp);
+            //Kontroler.getInstance().put("izabrani_partner", pp);
             FrmUnosPartnera formaUnos = new FrmUnosPartnera();
             JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor(this);
             dialog.dispose();
@@ -117,12 +116,12 @@ public class FrmPrikazPartnera extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void srediFormu() {
-        List<PoslovniPartner> listaPartnera = Kontroler.getInstance().vratiPartnere();
+        //List<PoslovniPartner> listaPartnera = Kontroler.getInstance().vratiPartnere();
 
-        jcbPartner.setModel(new DefaultComboBoxModel(listaPartnera.toArray()));
+        //jcbPartner.setModel(new DefaultComboBoxModel(listaPartnera.toArray()));
 
-        PartnerTableModel model = new PartnerTableModel(listaPartnera);
-        jtblPartner.setModel(model);
+        //PartnerTableModel model = new PartnerTableModel(listaPartnera);
+        //jtblPartner.setModel(model);
 
         /* --Prevazidjena implementacija--
         DefaultTableModel model = (DefaultTableModel) jtblPartner.getModel();

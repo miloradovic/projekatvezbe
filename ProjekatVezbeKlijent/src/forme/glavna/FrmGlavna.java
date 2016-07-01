@@ -9,7 +9,7 @@ import forme.partner.FrmPrikazPartnera;
 import forme.partner.FrmUnosPartnera;
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
-import poslovnalogika.Kontroler;
+
 
 /**
  *
@@ -22,8 +22,6 @@ public class FrmGlavna extends javax.swing.JFrame {
      */
     public FrmGlavna() {
         initComponents();
-        Kontroler.getInstance().dodajMesto(new Mesto(11000, "Beograd"));
-        Kontroler.getInstance().dodajMesto(new Mesto(35000, "Jagodina"));
     }
 
     /**

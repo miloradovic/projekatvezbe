@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import poslovnalogika.Kontroler;
 
 /**
  *
@@ -269,7 +268,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
             Mesto mesto = (Mesto) jcbMesto.getSelectedItem();
             PoslovniPartner pp = new PoslovniPartner(partnerID, naziv, pib, maticni, datum, ziroRacun, ulica, broj, mesto);
 
-            Kontroler.getInstance().dodajPartnera(pp);
+            //Kontroler.getInstance().dodajPartnera(pp);
             JOptionPane.showMessageDialog(this, "Partner je sacuvan.");
         } catch (NumberFormatException | ParseException | HeadlessException e) {
             System.out.println("Greska: " + e.toString());
@@ -291,7 +290,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         try {
             PartnerTableModel model = (PartnerTableModel) jtblPartner.getModel();
             List<PoslovniPartner> lp = model.vratiPartnere();
-            Kontroler.getInstance().sacuvajPartnere(lp);
+            //Kontroler.getInstance().sacuvajPartnere(lp);
             JOptionPane.showMessageDialog(this, "Partneri su sacuvani.");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -374,34 +373,34 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void srediFormu() {
-        try {
-            List<Mesto> listaMesta = Kontroler.getInstance().vratiMesta();
-            jcbMesto.removeAllItems();
-            for (Mesto m : listaMesta) {
-                jcbMesto.addItem(m);
-            }
-
-            PoslovniPartner pp = (PoslovniPartner) Kontroler.getInstance().get("izabrani_partner");
-            if (pp != null) {
-                // Operacija je izmena
-                jbtnSacuvaj.setVisible(false);
-                jtxtPartnerID.setText(String.valueOf(pp.getPartnerID()));
-                jtxtNaziv.setText(pp.getNaziv());
-                jtxtPib.setText(String.valueOf(pp.getPib()));
-                jtxtMaticni.setText(String.valueOf(pp.getMaticniBroj()));
-                //jtxtDatum.setText(pp.getDatumOsnivanja().toString());
-                jtxtDatum.setText(DATE_FORMAT.format(pp.getDatumOsnivanja()));
-                jtxtZiroRacun.setText(pp.getZiroRacun());
-                jtxtUlica.setText(pp.getUlica());
-                jtxtBroj.setText(pp.getBroj());
-                jcbMesto.setSelectedItem(pp.getMesto());
-                Kontroler.getInstance().remove("izabrani_partner");
-            } else {
-                // Operacija je unos
-                jbtnIzmeni.setVisible(false);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+//        try {
+//            List<Mesto> listaMesta = Kontroler.getInstance().vratiMesta();
+//            jcbMesto.removeAllItems();
+//            for (Mesto m : listaMesta) {
+//                jcbMesto.addItem(m);
+//            }
+//
+//            PoslovniPartner pp = (PoslovniPartner) Kontroler.getInstance().get("izabrani_partner");
+//            if (pp != null) {
+//                // Operacija je izmena
+//                jbtnSacuvaj.setVisible(false);
+//                jtxtPartnerID.setText(String.valueOf(pp.getPartnerID()));
+//                jtxtNaziv.setText(pp.getNaziv());
+//                jtxtPib.setText(String.valueOf(pp.getPib()));
+//                jtxtMaticni.setText(String.valueOf(pp.getMaticniBroj()));
+//                //jtxtDatum.setText(pp.getDatumOsnivanja().toString());
+//                jtxtDatum.setText(DATE_FORMAT.format(pp.getDatumOsnivanja()));
+//                jtxtZiroRacun.setText(pp.getZiroRacun());
+//                jtxtUlica.setText(pp.getUlica());
+//                jtxtBroj.setText(pp.getBroj());
+//                jcbMesto.setSelectedItem(pp.getMesto());
+//                Kontroler.getInstance().remove("izabrani_partner");
+//            } else {
+//                // Operacija je unos
+//                jbtnIzmeni.setVisible(false);
+//            }
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, ex.getMessage());
+//        }
     }
 }
