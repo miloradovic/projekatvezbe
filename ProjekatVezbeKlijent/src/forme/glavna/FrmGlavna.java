@@ -4,9 +4,9 @@
  */
 package forme.glavna;
 
-import domen.Mesto;
 import forme.partner.FrmPrikazPartnera;
 import forme.partner.FrmUnosPartnera;
+import forme.racun.FrmUnosRacuna;
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
 
@@ -37,6 +37,8 @@ public class FrmGlavna extends javax.swing.JFrame {
         jmRadSaPartnerima = new javax.swing.JMenu();
         jmiUnosPartnera = new javax.swing.JMenuItem();
         jmiPrikazPartnera = new javax.swing.JMenuItem();
+        jmRadSaRacunima = new javax.swing.JMenu();
+        jmiUnosRacuna = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ProSoft");
@@ -60,6 +62,18 @@ public class FrmGlavna extends javax.swing.JFrame {
         jmRadSaPartnerima.add(jmiPrikazPartnera);
 
         jmbGlavniMeni.add(jmRadSaPartnerima);
+
+        jmRadSaRacunima.setText("Rad sa racunima");
+
+        jmiUnosRacuna.setText("Unos racuna");
+        jmiUnosRacuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiUnosRacunaActionPerformed(evt);
+            }
+        });
+        jmRadSaRacunima.add(jmiUnosRacuna);
+
+        jmbGlavniMeni.add(jmRadSaRacunima);
 
         setJMenuBar(jmbGlavniMeni);
 
@@ -90,6 +104,15 @@ public class FrmGlavna extends javax.swing.JFrame {
         dialog.pack();
         dialog.setVisible(true);
     }//GEN-LAST:event_jmiPrikazPartneraActionPerformed
+
+    private void jmiUnosRacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiUnosRacunaActionPerformed
+        FrmUnosRacuna f = new FrmUnosRacuna();
+        JDialog dialog = new JDialog(this, "Unos racuna", true);
+        dialog.setLayout(new BorderLayout());
+        dialog.add(f, BorderLayout.CENTER);
+        dialog.pack();
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jmiUnosRacunaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -128,8 +151,10 @@ public class FrmGlavna extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jmRadSaPartnerima;
+    private javax.swing.JMenu jmRadSaRacunima;
     private javax.swing.JMenuBar jmbGlavniMeni;
     private javax.swing.JMenuItem jmiPrikazPartnera;
     private javax.swing.JMenuItem jmiUnosPartnera;
+    private javax.swing.JMenuItem jmiUnosRacuna;
     // End of variables declaration//GEN-END:variables
 }
