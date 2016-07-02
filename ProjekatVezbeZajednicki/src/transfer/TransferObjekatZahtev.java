@@ -12,15 +12,15 @@ import java.io.Serializable;
  */
 public class TransferObjekatZahtev implements Serializable {
 
-    private int operaacija;
+    private int operacija;
     private Object parametar;
 
-    public int getOperaacija() {
-        return operaacija;
+    public int getOperacija() {
+        return operacija;
     }
 
-    public void setOperaacija(int operaacija) {
-        this.operaacija = operaacija;
+    public void setOperaacija(int operacija) {
+        this.operacija = operacija;
     }
 
     public Object getParametar() {
