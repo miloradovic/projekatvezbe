@@ -31,7 +31,7 @@ public class NitKlijent extends Thread {
     public void run() {
         try {
             izvrsenjeOperacija();
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         System.out.println("Nit je zavrsila sa radom.");
