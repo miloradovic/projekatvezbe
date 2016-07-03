@@ -92,7 +92,7 @@ public class Kontroler {
             db.zatvoriKonekciju();
         }
     }
-    
+
     public List<Proizvod> vratiProizvode() throws Exception {
         db.ucitajDriver();
         db.otvoriKonekciju();
@@ -101,7 +101,7 @@ public class Kontroler {
         db.zatvoriKonekciju();
         return lp;
     }
-    
+
     public void sacuvajRacun(Racun racun) throws Exception {
         try {
             racun.pripremiRacun();
