@@ -4,11 +4,13 @@
  */
 package domen;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Darko
  */
-public class Mesto {
+public class Mesto implements Serializable{
 
     private int ptt;
     private String naziv;

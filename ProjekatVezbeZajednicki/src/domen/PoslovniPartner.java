@@ -4,13 +4,14 @@
  */
 package domen;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Darko
  */
-public class PoslovniPartner {
+public class PoslovniPartner implements Serializable {
 
     private int partnerID;
     private String naziv;

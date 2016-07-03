@@ -4,6 +4,7 @@
  */
 package domen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
  *
  * @author Darko
  */
-public class Racun {
+public class Racun implements Serializable {
+
     private int racunID;
     private Date datum;
     private double ukupanIznos;
@@ -70,15 +72,15 @@ public class Racun {
     public void setListaStavki(List<StavkaRacuna> listaStavki) {
         this.listaStavki = listaStavki;
     }
-    
+
     public void dodajStavku() {
         listaStavki.add(new StavkaRacuna());
     }
-    
+
     public void obrisiStavku(int rb) {
         listaStavki.remove(rb);
     }
-    
+
     public void pripremiRacun() {
         double ukupanIznos = 0;
         int rb = 0;

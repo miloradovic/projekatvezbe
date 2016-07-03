@@ -4,11 +4,14 @@
  */
 package domen;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Darko
  */
-public class Proizvod {
+public class Proizvod implements Serializable {
+
     private int proizvodID;
     private String naziv;
     private double cena;
@@ -52,13 +55,12 @@ public class Proizvod {
     }
 
     @Override
-    public boolean equals(Object obj) {        
+    public boolean equals(Object obj) {
         if (obj != null && obj instanceof Proizvod) {
             Proizvod p = (Proizvod) obj;
             return p.getProizvodID() == this.getProizvodID();
         }
         return false;
     }
-    
-    
+
 }

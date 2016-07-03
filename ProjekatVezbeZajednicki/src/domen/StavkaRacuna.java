@@ -4,11 +4,14 @@
  */
 package domen;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Darko
  */
-public class StavkaRacuna {
+public class StavkaRacuna implements Serializable {
+
     private int rb;
     private int kolicina;
     private double iznos;
@@ -55,6 +58,5 @@ public class StavkaRacuna {
     public void setProizvod(Proizvod proizvod) {
         this.proizvod = proizvod;
     }
-    
-    
+
 }
