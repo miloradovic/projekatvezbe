@@ -19,7 +19,7 @@ public class TransferObjekatZahtev implements Serializable {
         return operacija;
     }
 
-    public void setOperaacija(int operacija) {
+    public void setOperacija(int operacija) {
         this.operacija = operacija;
     }
 
