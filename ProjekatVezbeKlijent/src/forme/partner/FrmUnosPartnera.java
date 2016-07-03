@@ -7,15 +7,20 @@ package forme.partner;
 import domen.Mesto;
 import domen.PoslovniPartner;
 import forme.partner.model.PartnerTableModel;
-import java.awt.HeadlessException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableColumn;
+import komunikacija.Komunikacija;
+import transfer.TransferObjekatOdgovor;
+import transfer.TransferObjekatZahtev;
+import util.Konstante;
+import util.Util;
 
 /**
  *
@@ -268,12 +273,18 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
             Mesto mesto = (Mesto) jcbMesto.getSelectedItem();
             PoslovniPartner pp = new PoslovniPartner(partnerID, naziv, pib, maticni, datum, ziroRacun, ulica, broj, mesto);
 
-            //Kontroler.getInstance().dodajPartnera(pp);
-            JOptionPane.showMessageDialog(this, "Partner je sacuvan.");
-        } catch (NumberFormatException | ParseException | HeadlessException e) {
-            System.out.println("Greska: " + e.toString());
+            TransferObjekatZahtev toZahtev = new TransferObjekatZahtev();
+            toZahtev.setOperacija(Konstante.SACUVAJ_PARTNERA);
+            toZahtev.setParametar(pp);
+            Komunikacija.getInstance().posaljiZahtev(toZahtev);
+            TransferObjekatOdgovor toOdgovor = Komunikacija.getInstance().primiOdgovor();
+            if (toOdgovor.getIzuzetak() == null) {
+                JOptionPane.showMessageDialog(this, "Partner je sacuvan!");
+            } else {
+                JOptionPane.showMessageDialog(this, toOdgovor.getPoruka());
+            }
         } catch (Exception ex) {
-            Logger.getLogger(FrmUnosPartnera.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_jbtnSacuvajActionPerformed
 
@@ -290,7 +301,7 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
         try {
             PartnerTableModel model = (PartnerTableModel) jtblPartner.getModel();
             List<PoslovniPartner> lp = model.vratiPartnere();
-            //Kontroler.getInstance().sacuvajPartnere(lp);
+            
             JOptionPane.showMessageDialog(this, "Partneri su sacuvani.");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -373,34 +384,49 @@ public class FrmUnosPartnera extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void srediFormu() {
-//        try {
-//            List<Mesto> listaMesta = Kontroler.getInstance().vratiMesta();
-//            jcbMesto.removeAllItems();
-//            for (Mesto m : listaMesta) {
-//                jcbMesto.addItem(m);
-//            }
-//
-//            PoslovniPartner pp = (PoslovniPartner) Kontroler.getInstance().get("izabrani_partner");
-//            if (pp != null) {
-//                // Operacija je izmena
-//                jbtnSacuvaj.setVisible(false);
-//                jtxtPartnerID.setText(String.valueOf(pp.getPartnerID()));
-//                jtxtNaziv.setText(pp.getNaziv());
-//                jtxtPib.setText(String.valueOf(pp.getPib()));
-//                jtxtMaticni.setText(String.valueOf(pp.getMaticniBroj()));
-//                //jtxtDatum.setText(pp.getDatumOsnivanja().toString());
-//                jtxtDatum.setText(DATE_FORMAT.format(pp.getDatumOsnivanja()));
-//                jtxtZiroRacun.setText(pp.getZiroRacun());
-//                jtxtUlica.setText(pp.getUlica());
-//                jtxtBroj.setText(pp.getBroj());
-//                jcbMesto.setSelectedItem(pp.getMesto());
-//                Kontroler.getInstance().remove("izabrani_partner");
-//            } else {
-//                // Operacija je unos
-//                jbtnIzmeni.setVisible(false);
-//            }
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(this, ex.getMessage());
-//        }
+        try {
+            TransferObjekatZahtev toZahtev = new TransferObjekatZahtev();
+            toZahtev.setOperacija(Konstante.VRATI_MESTA);
+            Komunikacija.getInstance().posaljiZahtev(toZahtev);
+            TransferObjekatOdgovor toOdgovor = Komunikacija.getInstance().primiOdgovor();
+            if (toOdgovor.getIzuzetak() != null) {
+                throw (Exception) toOdgovor.getIzuzetak();
+            }
+            List<Mesto> listaMesta = (List<Mesto>) toOdgovor.getRezultat();
+            
+            JComboBox jcbMestoTabela = new JComboBox();
+            jcbMesto.removeAllItems();
+            for (Mesto m : listaMesta) {
+                jcbMesto.addItem(m);
+                jcbMestoTabela.addItem(m);
+            }
+            
+            PartnerTableModel model = new PartnerTableModel(new ArrayList<PoslovniPartner>());
+            jtblPartner.setModel(model);
+            TableColumn tcMesto = jtblPartner.getColumnModel().getColumn(8);
+            tcMesto.setCellEditor(new DefaultCellEditor(jcbMestoTabela));
+
+            PoslovniPartner pp = (PoslovniPartner) Util.getInstance().get("izabrani_partner");
+            if (pp != null) {
+                // Operacija je izmena
+                jbtnSacuvaj.setVisible(false);
+                jtxtPartnerID.setText(String.valueOf(pp.getPartnerID()));
+                jtxtNaziv.setText(pp.getNaziv());
+                jtxtPib.setText(String.valueOf(pp.getPib()));
+                jtxtMaticni.setText(String.valueOf(pp.getMaticniBroj()));
+                //jtxtDatum.setText(pp.getDatumOsnivanja().toString());
+                jtxtDatum.setText(DATE_FORMAT.format(pp.getDatumOsnivanja()));
+                jtxtZiroRacun.setText(pp.getZiroRacun());
+                jtxtUlica.setText(pp.getUlica());
+                jtxtBroj.setText(pp.getBroj());
+                jcbMesto.setSelectedItem(pp.getMesto());
+                Util.getInstance().remove("izabrani_partner");
+            } else {
+                // Operacija je unos
+                jbtnIzmeni.setVisible(false);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }
 }

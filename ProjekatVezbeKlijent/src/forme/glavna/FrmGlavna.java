@@ -8,7 +8,11 @@ import forme.partner.FrmPrikazPartnera;
 import forme.partner.FrmUnosPartnera;
 import forme.racun.FrmUnosRacuna;
 import java.awt.BorderLayout;
+import java.io.IOException;
 import javax.swing.JDialog;
+import komunikacija.Komunikacija;
+import transfer.TransferObjekatZahtev;
+import util.Konstante;
 
 
 /**
@@ -42,6 +46,11 @@ public class FrmGlavna extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ProSoft");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jmRadSaPartnerima.setText("Rad sa partnerima");
 
@@ -113,6 +122,16 @@ public class FrmGlavna extends javax.swing.JFrame {
         dialog.pack();
         dialog.setVisible(true);
     }//GEN-LAST:event_jmiUnosRacunaActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            TransferObjekatZahtev toZahtev = new TransferObjekatZahtev();
+            toZahtev.setOperacija(Konstante.KRAJ_RADA);
+            Komunikacija.getInstance().posaljiZahtev(toZahtev);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

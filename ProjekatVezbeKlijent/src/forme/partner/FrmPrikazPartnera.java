@@ -6,8 +6,10 @@ package forme.partner;
 
 import domen.PoslovniPartner;
 import forme.partner.model.PartnerTableModel;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import util.Util;
 
 /**
  *
@@ -98,7 +100,7 @@ public class FrmPrikazPartnera extends javax.swing.JPanel {
         } else {
             PartnerTableModel model = (PartnerTableModel) jtblPartner.getModel();
             PoslovniPartner pp = model.getPartner(red);
-            //Kontroler.getInstance().put("izabrani_partner", pp);
+            Util.getInstance().put("izabrani_partner", pp);
             FrmUnosPartnera formaUnos = new FrmUnosPartnera();
             JDialog dialog = (JDialog) SwingUtilities.getWindowAncestor(this);
             dialog.dispose();
@@ -116,16 +118,16 @@ public class FrmPrikazPartnera extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void srediFormu() {
-        //List<PoslovniPartner> listaPartnera = Kontroler.getInstance().vratiPartnere();
+        try {
+            List<PoslovniPartner> listaPartnera = new ArrayList<>();
+            jcbPartner.setModel(new DefaultComboBoxModel(listaPartnera.toArray()));
 
-        //jcbPartner.setModel(new DefaultComboBoxModel(listaPartnera.toArray()));
+            PartnerTableModel model = new PartnerTableModel(listaPartnera);
+            jtblPartner.setModel(model);
 
-        //PartnerTableModel model = new PartnerTableModel(listaPartnera);
-        //jtblPartner.setModel(model);
-
-        /* --Prevazidjena implementacija--
-        DefaultTableModel model = (DefaultTableModel) jtblPartner.getModel();
-        for (PoslovniPartner pp : listaPartnera) {
+            /* --Prevazidjena implementacija--
+            DefaultTableModel model = (DefaultTableModel) jtblPartner.getModel();
+            for (PoslovniPartner pp : listaPartnera) {
             Object[] red = new Object[9];
             red[0] = pp.getPartnerID();
             red[1] = pp.getNaziv();
@@ -138,6 +140,10 @@ public class FrmPrikazPartnera extends javax.swing.JPanel {
             red[8] = pp.getMesto();
             model.addRow(red);
         }
-         */
+             */
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
 }
