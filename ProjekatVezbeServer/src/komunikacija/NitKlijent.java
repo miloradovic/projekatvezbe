@@ -21,6 +21,7 @@ public class NitKlijent extends Thread {
 
     private Socket socket;
     private boolean aktivan;
+    private int privremenoPolje;
 
     public NitKlijent(Socket socket) {
         this.socket = socket;
